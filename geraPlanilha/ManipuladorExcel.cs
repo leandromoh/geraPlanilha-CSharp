@@ -60,12 +60,12 @@ namespace geraPlanilha
                 abrirArquivo(path);
         }
 
-        public void salvar(string path)
+        private void salvar(string path)
         {
             wb.SaveAs(@path, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlNoChange, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
         }
 
-        public void abrirArquivo(string path)
+        private void abrirArquivo(string path)
         {
             try
             {
@@ -80,12 +80,12 @@ namespace geraPlanilha
             }
         }
 
-        public void fechar()
+        private void fechar()
         {
             excel.Quit();
         }
 
-        public void criarCabecalhoAno(string c1, string c2, int ano)
+        private void criarCabecalhoAno(string c1, string c2, int ano)
         {
             ws.get_Range(c1, c2).Merge();
             ws.get_Range(c1).Cells.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
@@ -95,7 +95,7 @@ namespace geraPlanilha
             ws.get_Range(c1).Font.Size = 16;
         }
 
-        public void criarCabecalhoMes(string c1, string c2, int mes)
+        private void criarCabecalhoMes(string c1, string c2, int mes)
         {
             ws.get_Range(c1, c2).Borders.Weight = Excel.XlBorderWeight.xlMedium;
             ws.get_Range(c1, c2).Merge();
@@ -105,7 +105,7 @@ namespace geraPlanilha
             ws.get_Range(c1).Font.Size = 16;
         }
 
-        public void criarCabecalhoNomeGuardas(string c1, string c2, string c3, string g1, string g2, string g3)
+        private void criarCabecalhoNomeGuardas(string c1, string c2, string c3, string g1, string g2, string g3)
         {
             string c0 = c1.Substring(1);
             string c4 = incrementCharacter(c1[0], 2) + c0;
@@ -125,27 +125,27 @@ namespace geraPlanilha
             ws.get_Range(c3, c6).Merge();
         }
 
-        public void larguraColuna(string col, int tam)
+        private void larguraColuna(string col, int tam)
         {
             ws.get_Range(col).EntireColumn.ColumnWidth = tam;
         }
 
-        public void alinharHorizontal(string c1, string c2)
+        private void alinharHorizontal(string c1, string c2)
         {
             ws.get_Range(c1, c2).Cells.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
         }
 
-        public void bordaContinua(string c1, string c2)
+        private void bordaContinua(string c1, string c2)
         {
             ws.get_Range(c1, c2).Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
         }
 
-        public void deletaIntervaloLinhas(string c1, string c2)
+        private void deletaIntervaloLinhas(string c1, string c2)
         {
             ws.get_Range(c1, c2).EntireRow.Delete();
         }
 
-        public int[] criarBlocoFolgaMes(int dia, int mes, int ano, int guarda, int i)
+        private int[] criarBlocoFolgaMes(int dia, int mes, int ano, int guarda, int i)
         {
             int[] termos = new int[5];
             int i2 = i, j;
