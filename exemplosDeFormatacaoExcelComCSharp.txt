@@ -1,0 +1,29 @@
+/*
+Microsoft.Office.Interop.Excel.Range de = (ws.Cells[3, 8] as Microsoft.Office.Interop.Excel.Range);
+de.Value = "ABBC";
+de.Font.Bold = true;
+de.Font.Color = Color.Blue;
+de.Font.Italic = true;
+de.Font.Name = "Comic Sans MS";
+de.Font.Size = 22;
+ws.get_Range("H3", "J10").Merge();
+//ws.Range["H3"].Style.HorizontalAlignment = HorizontalAlignment.Center;
+
+//centraliza horizontalmente 
+ws.get_Range("H3", "J10").Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+//centraliza verticalmente
+ws.get_Range("H3", "J10").Cells.VerticalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+
+//borda continua
+ws.get_Range("A1", "C5").Borders.LineStyle = Microsoft.Office.Interop.Excel.XlLineStyle.xlContinuous;
+//borda preta
+ws.get_Range("G11", "I13").Borders.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Black);
+
+//borda continua
+ws.get_Range("H3", "J10").Borders.LineStyle = Microsoft.Office.Interop.Excel.XlLineStyle.xlContinuous;
+//borda grosa
+ws.get_Range("H3", "J10").Borders.Weight = Microsoft.Office.Interop.Excel.XlBorderWeight.xlThick;
+//seta largura da coluna para 35
+//ws.get_Range("A1", "C5").EntireColumn.ColumnWidth = 35;
+ws.get_Range("A1", "C5").EntireColumn.AutoFit();
+*/
