@@ -1,6 +1,6 @@
 ﻿namespace geraPlanilha
 {
-    partial class Form1
+    partial class frmMain
     {
         /// <summary>
         /// Variável de designer necessária.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.btnGeraPlanilha = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.txtGuarda1 = new System.Windows.Forms.TextBox();
@@ -268,7 +268,7 @@
             0,
             0});
             // 
-            // Form1
+            // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -287,7 +287,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnGeraPlanilha);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "Form1";
+            this.Name = "frmMain";
             this.Text = "geraPlanilha 2.10";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
