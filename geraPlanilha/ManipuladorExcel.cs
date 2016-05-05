@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using Excel = Microsoft.Office.Interop.Excel;
 
 namespace geraPlanilha
@@ -19,6 +20,44 @@ namespace geraPlanilha
             wb = excel.Workbooks.Add(Excel.XlWBATemplate.xlWBATWorksheet);
             ws = (Excel.Worksheet)wb.Worksheets.get_Item(1);
             ws.Name = nome;
+        }
+
+        public void criarPlanilha(string guard1, string guard2, string guard3, DateTime date, int guardaComecaMes, bool openAfterCompleted)
+        {
+            int[] termos = new int[5];
+
+            criarCabecalhoAno("D3", "H3", date.Year);
+
+            termos = new int[] { date.Day, date.Month, date.Year, guardaComecaMes, 6 };
+
+            for (int i = 0; i < 4; i++, termos[4] += 2)
+            {
+                string a = termos[4].ToString();
+                string b = (++termos[4]).ToString();
+
+                criarCabecalhoMes("B" + a, "J" + a, termos[1]);
+                criarCabecalhoNomeGuardas("B" + b, "E" + b, "H" + b, guard1, guard2, guard3);
+                termos = criarBlocoFolgaMes(termos[0], termos[1], termos[2], termos[3], ++termos[4]);
+                bordaContinua("B" + b, "J" + termos[4]);
+            }
+
+            larguraColuna("B1", 7);
+            larguraColuna("E1", 7);
+            larguraColuna("H1", 7);
+
+            alinharHorizontal("B6", "B" + termos[4]);
+            alinharHorizontal("E6", "E" + termos[4]);
+            alinharHorizontal("H6", "H" + termos[4]);
+
+            string folder = Directory.GetCurrentDirectory();
+            string fileName = string.Format("ESCALA {0}-{1}.xlsx", date.Month, date.Year);
+            string path = Path.Combine(folder, fileName);
+
+            salvar(path);
+            fechar();
+
+            if(openAfterCompleted)
+                abrirArquivo(path);
         }
 
         public void salvar(string path)
