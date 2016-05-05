@@ -58,7 +58,7 @@ namespace geraPlanilha
         }
 
         // retorna o numero (posicao) de um dia no ano. Exemplo: 01/02 => 32° dia no ano
-        private static int diasAno(int dia, int mes, int ano)
+        public static int diasAno(int dia, int mes, int ano)
         {
             int diaAno;
 
@@ -132,7 +132,7 @@ namespace geraPlanilha
             Data d = new Data(t0, t1, t2);
 
             if (d.componentes[1] > 0 && d.componentes[1] < 13)
-                return (d.componentes[0] > diasMes(d.componentes[1], d.componentes[2])) ? false : true;
+                return (d.componentes[0] <= diasMes(d.componentes[1], d.componentes[2]));
 
             return false;
         }
@@ -210,18 +210,18 @@ namespace geraPlanilha
         }
 
         //conta quantos anos bissextos tem em um intervalo de x anos a partir de um ano inicial y
-        public static int contaAnosB(int anoAtual, int anosDicionais)
+        public static long contaAnosB(int anoAtual, int anosDicionais)
         {
-            int anosB = 0;
-            int aux = 0;
+            long anoLim = anoAtual + anosDicionais + 1;
+            long anosB = 0;
 
-            for (; !bissexto(anoAtual++); aux++) ;
-
-            if (aux > anosDicionais) return 0;
-
-            anosB++;
-
-            anosB += (int)(anosDicionais - aux) / 4;
+            for (; anoAtual < anoLim; anoAtual++)
+            {
+                if (bissexto(anoAtual))
+                {
+                    anosB++;
+                }
+            }
 
             return anosB;
         }
@@ -252,9 +252,40 @@ namespace geraPlanilha
             }
         }
 
-        public void sub(long dias)
+        private void subMuitosDias(long dias)
         {
             diasData(dataDias() - dias);
+        }
+
+        private void subPoucosDias(long dias)
+        {
+            while (dias > 0)
+            {
+                if (dias >= componentes[0])
+                {
+                    dias -= componentes[0];
+                    componentes[1]--;
+                    if (componentes[1] == 0)
+                    {
+                        componentes[1] = 12;
+                        componentes[2]--;
+                    }
+                }
+                else
+                {
+                    componentes[0] -= (int)dias;
+                    break;
+                }
+                componentes[0] = diasMes(componentes[1], componentes[2]);
+            }
+        }
+
+        public void sub(long dias)
+        {
+            if (dias > (dataDias() / 2))
+                subMuitosDias(dias);
+            else
+                subPoucosDias(dias);
         }
 
         public long sub(Data d)
@@ -264,37 +295,37 @@ namespace geraPlanilha
             return (dif < 0) ? dif * -1 : dif;
         }
 
-        public string getDiaString()
+        public String getDiaString()
         {
-            return checkTime(componentes[termos[0]]);
+            return checkTime(componentes[0]);
         }
 
         public int getDia()
         {
-            return componentes[termos[0]];
+            return componentes[0];
         }
 
         public int getMes()
         {
-            return componentes[termos[1]];
+            return componentes[1];
         }
 
         public int getAno()
         {
-            return componentes[termos[2]];
+            return componentes[2];
         }
 
-        public string getDiaSemanaExtenso()
+        public String getDiaSemanaExtenso()
         {
-            return diaSemanaExtenso[dataDias() % 7];
+            return diaSemanaExtenso[(int) (dataDias() % 7)];
         }
 
-        public string getMesExtenso()
+        public String getMesExtenso()
         {
-            return mesExtenso[componentes[termos[1]] - 1];
+            return mesExtenso[componentes[1] - 1];
         }
 
-        public static string getMesExtenso(int mes)
+        public static String getMesExtenso(int mes)
         {
             return mesExtenso[mes - 1];
         }
